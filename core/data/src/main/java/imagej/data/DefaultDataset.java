@@ -62,6 +62,7 @@ import net.imglib2.img.basictypeaccess.array.LongArray;
 import net.imglib2.img.basictypeaccess.array.ShortArray;
 import net.imglib2.meta.Axes;
 import net.imglib2.meta.AxisType;
+import net.imglib2.ops.function.Function;
 import net.imglib2.type.NativeType;
 import net.imglib2.type.Type;
 import net.imglib2.type.numeric.IntegerType;
@@ -746,5 +747,24 @@ public class DefaultDataset extends AbstractData implements Dataset {
 		if (imgPlus.getAxisIndex(Axes.CHANNEL) < 0) return false;
 		if (imgPlus.dimension(getAxisIndex(Axes.CHANNEL)) != 3) return false;
 		return true;
+	}
+
+	private RandomAccess<? extends RealType<?>> accessor;
+	
+	@Override
+	public void compute(long[] input, RealType<?> output) {
+		if (accessor == null) accessor = imgPlus.randomAccess();
+		accessor.setPosition(input);
+		output.setReal(accessor.get().getRealDouble());
+	}
+
+	@Override
+	public RealType<?> createOutput() {
+		return imgPlus.firstElement();
+	}
+
+	@Override
+	public Dataset copy() {
+		return duplicate();
 	}
 }

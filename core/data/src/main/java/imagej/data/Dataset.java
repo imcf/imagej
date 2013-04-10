@@ -38,6 +38,7 @@ package imagej.data;
 import net.imglib2.img.ImgPlus;
 import net.imglib2.meta.AxisType;
 import net.imglib2.meta.Metadata;
+import net.imglib2.ops.function.Function;
 import net.imglib2.type.numeric.RealType;
 
 /**
@@ -49,7 +50,7 @@ import net.imglib2.type.numeric.RealType;
  * @author Curtis Rueden
  * @author Barry DeZonia
  */
-public interface Dataset extends Data, Metadata {
+public interface Dataset extends Data, Metadata, Function<long[],RealType<?>> {
 
 	/** TODO */
 	boolean isDirty();
