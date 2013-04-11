@@ -1,9 +1,6 @@
 package imagej.data.measure;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import net.imglib2.ops.function.Function;
 import net.imglib2.ops.pointset.PointSet;
@@ -156,4 +153,22 @@ public class MeasureService {
 	 */
 	// related fiji mail list post:
 	// https://groups.google.com/forum/?fromgroups=#!topic/fiji-devel/AnYq_caJA1M
+
+	/*
+	 * How would lookup work?
+	 *   Variance actual = service.lookup(new Variance(dataset,region)); ???
+	 *   OR
+	 *   Variance actual = service.lookup(Variance.class, dataset, region);
+	 *   
+	 *   Both ways are a bit clunky
+	 *   1st one ends up using same constructor twice: once for registration and
+	 *     once for lookup. This is not the friendliest way to work.
+	 *   2nd one seems more reasonable after further thought
+	 *     The matcher can just call Object::equals() on each param and each
+	 *     param type can implement equals if they want. Thus passing numbers
+	 *     would automatically work if the values were the same (I think). Passing
+	 *     numbers is evil in a way. What if you pass two of them as 5,4 and later
+	 *     check for two as 4,5. As ctor params their order matters. As lookup
+	 *     params I was hoping they wouldn't have to be.
+	 */
 }
