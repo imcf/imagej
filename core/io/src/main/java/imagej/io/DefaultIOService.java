@@ -43,6 +43,8 @@ import imagej.text.TextService;
 import io.scif.FormatException;
 import io.scif.io.img.ImgIOException;
 import io.scif.io.img.ImgOpener;
+import io.scif.io.img.ImgOptions;
+import io.scif.io.img.ImgOptions.CheckMode;
 import io.scif.services.FormatService;
 
 import java.io.File;
@@ -166,7 +168,7 @@ public final class DefaultIOService<T extends RealType<T> & NativeType<T>>
 		// NativeType. Later, when that has been accomplished remove this cast.
 		final ImgPlus<T> imgPlus = (ImgPlus<T>) imageOpener.openImg(source);
 		*/
-		final ImgPlus<T> imgPlus = imageOpener.openImg(source, 0, true, false);
+		final ImgPlus<T> imgPlus = imageOpener.openImg(source, new ImgOptions().setCheckMode(CheckMode.DEEP));
 		final Dataset dataset = datasetService.create(imgPlus);
 		eventService.publish(new FileOpenedEvent(source));
 		return dataset;
