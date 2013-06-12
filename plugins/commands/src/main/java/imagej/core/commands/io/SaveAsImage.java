@@ -122,7 +122,6 @@ public class SaveAsImage extends ContextCommand {
 
 		if (overwrite) {
 			final ImgSaver imageSaver = new ImgSaver();
-			imageSaver.setContext(getContext());
 			boolean saveImage = true;
 			try {
 				if (imageSaver.isCompressible(img)) {
