@@ -41,10 +41,10 @@ import imagej.io.event.FileOpenedEvent;
 import imagej.module.ModuleService;
 import imagej.text.TextService;
 import io.scif.FormatException;
-import io.scif.io.img.ImgIOException;
-import io.scif.io.img.ImgOpener;
-import io.scif.io.img.ImgOptions;
-import io.scif.io.img.ImgOptions.CheckMode;
+import io.scif.img.ImgIOException;
+import io.scif.img.ImgOpener;
+import io.scif.img.ImgOptions;
+import io.scif.img.ImgOptions.CheckMode;
 import io.scif.services.FormatService;
 
 import java.io.File;
