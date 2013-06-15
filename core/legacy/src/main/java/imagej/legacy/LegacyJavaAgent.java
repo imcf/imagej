@@ -121,6 +121,16 @@ public class LegacyJavaAgent implements ClassFileTransformer {
 		System.err.println("Wrote " + file);
 	}
 
+	private static Instrumentation instrumentation;
+	private static LegacyJavaAgent agent;
+
+	public static void stop() {
+		if (instrumentation != null && agent != null) {
+			instrumentation.removeTransformer(agent);
+			agent = null;
+		}
+	}
+
 	/**
 	 * The premain method started at JVM startup.
 	 * 
@@ -133,8 +143,10 @@ public class LegacyJavaAgent implements ClassFileTransformer {
 	 * @param instrumentation the {@link Instrumentation} instance passed by the JVM
 	 */
 	public static void premain(final String agentArgs, final Instrumentation instrumentation) {
+		LegacyJavaAgent.instrumentation = instrumentation;
 		System.err.println("The legacy agent was started with the argument: " + agentArgs);
-		instrumentation.addTransformer(new LegacyJavaAgent());
+		agent = new LegacyJavaAgent();
+		instrumentation.addTransformer(agent);
 	}
 
 	@Override
